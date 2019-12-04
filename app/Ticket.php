@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Ticket extends Model
 {
@@ -21,4 +23,51 @@ class Ticket extends Model
     protected $dates = [
         'paid_at',
     ];
+
+    /**
+     * Unpaid scope.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return void
+     */
+    public function scopeUnpaid(Builder $query)
+    {
+        $query->whereNull('paid_at');
+    }
+
+    /**
+     * Check if this ticket is paid.
+     *
+     * @return bool
+     */
+    public function isPaid(): bool
+    {
+        return ! is_null($this->paid_at);
+    }
+
+    /**
+     * Generate a hash from the id.
+     *
+     * @return string
+     */
+    public function hash()
+    {
+        return Hashids::connection('ticket')->encode($this->id);
+    }
+
+    /**
+     * Pay this ticket.
+     *
+     * @return bool
+     */
+    public function pay(): bool
+    {
+        if ($this->isPaid()) {
+            return true;
+        }
+
+        return $this->update([
+            'paid_at' => now(),
+        ]);
+    }
 }
