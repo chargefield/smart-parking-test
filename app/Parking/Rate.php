@@ -2,7 +2,9 @@
 
 namespace App\Parking;
 
-class Rate
+use JsonSerializable;
+
+class Rate implements JsonSerializable
 {
     protected $duration;
 
@@ -96,5 +98,22 @@ class Rate
     public function isDurationGreaterOrEqualTo(int $duration): bool
     {
         return $this->duration >= $duration;
+    }
+
+    /**
+     * Output array
+     *
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'label' => $this->label(),
+            'hours' => $this->hours(),
+            'price' => $this->price(),
+            'duration' => $this->duration(),
+            'amount' => $this->amount(),
+            'isMax' => $this->isMax(),
+        ];
     }
 }
