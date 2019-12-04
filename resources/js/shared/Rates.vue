@@ -1,6 +1,6 @@
 <template>
   <div v-if="hasRates">
-    <p class="text-center uppercase font-bold text-sm">Our Rates</p>
+    <p class="text-center uppercase font-bold text-sm">Daily Rates</p>
     <div
       class="flex flex-col sm:flex-row justify-center items-center flex-wrap bg-white rounded-lg p-4 shadow-inner uppercase mt-4"
     >
