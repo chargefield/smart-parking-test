@@ -25,6 +25,8 @@ class Manager
         if (isset($id[0]) && ! is_null($id[0])) {
             return Ticket::find($id[0]);
         }
+
+        return null;
     }
 
     /**
@@ -39,6 +41,8 @@ class Manager
 
             return Ticket::create([]);
         }
+
+        return null;
     }
 
     /**
