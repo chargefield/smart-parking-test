@@ -5,7 +5,7 @@
     <router-link
       class="rounded-lg px-4 py-1 text-xl bg-blue-400 text-white no-underline font-bold uppercase mt-8 shadow-md"
       :to="{ name: 'home' }"
-    >Home</router-link>
+    >Main Menu</router-link>
   </div>
 </template>
 
