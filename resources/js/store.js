@@ -6,7 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     rates: [],
-    spaces: {}
+    spaces: {
+      spacesAvailable: 0,
+      hasSpaces: false,
+      totalSpaces: 0
+    }
   },
   mutations: {
     UPDATE_RATES(state, rates) {
