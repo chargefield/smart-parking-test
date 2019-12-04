@@ -13,6 +13,16 @@ class Manager
     protected $used_tickets;
 
     /**
+     * Find all unpaid tickets.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function findAllUnpaidTickets(): Collection
+    {
+        return Ticket::unpaid()->oldest()->get();
+    }
+
+    /**
      * Find ticket with given $hash.
      *
      * @param string $hash
