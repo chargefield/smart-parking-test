@@ -101,7 +101,7 @@ class Rate implements JsonSerializable
     }
 
     /**
-     * Output array
+     * Output array.
      *
      * @return array
      */
