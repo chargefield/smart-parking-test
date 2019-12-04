@@ -2,6 +2,7 @@
 
 namespace App\Parking\Facades;
 
+use App\Parking\RateManager;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -14,6 +15,18 @@ use Illuminate\Support\Facades\Facade;
  */
 class Rates extends Facade
 {
+    /**
+     * Replace the bound instance with a fake.
+     *
+     * @return \App\Parking\RateManager
+     */
+    public static function fake()
+    {
+        static::swap($fake = new RateManager);
+
+        return $fake;
+    }
+
     /**
      * Get the registered name of the component.
      *
