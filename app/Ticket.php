@@ -70,4 +70,14 @@ class Ticket extends Model
             'paid_at' => now(),
         ]);
     }
+
+    /**
+     * Get formatted created date.
+     *
+     * @return string
+     */
+    public function getCreatedDate(): string
+    {
+        return $this->created_at->format('F j, Y h:i A');
+    }
 }

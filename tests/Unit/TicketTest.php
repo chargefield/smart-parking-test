@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Ticket;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -47,5 +48,15 @@ class TicketTest extends TestCase
         $this->assertTrue($ticket->pay());
 
         $this->assertTrue($ticket->isPaid());
+    }
+
+    /** @test */
+    public function it_gets_the_formatted_created_date()
+    {
+        $ticket = factory(Ticket::class)->create([
+            'created_at' => Carbon::parse('2019-12-04 12:45:00'),
+        ]);
+
+        $this->assertEquals('December 4, 2019 12:45 PM', $ticket->getCreatedDate());
     }
 }
