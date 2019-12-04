@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Ticket;
 use Carbon\Carbon;
 use Tests\TestCase;
+use App\Parking\Facades\Rates;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -58,5 +59,21 @@ class TicketTest extends TestCase
         ]);
 
         $this->assertEquals('December 4, 2019 12:45 PM', $ticket->getCreatedDate());
+    }
+
+    /** @test */
+    public function it_gets_the_ticket_rate()
+    {
+        Rates::fake()
+            ->add(1, 300)
+            ->add(3, 450)
+            ->add(6, 675)
+            ->max(1015);
+
+        $ticket = factory(Ticket::class)->create([
+            'created_at' => now()->subHours(4),
+        ]);
+
+        $this->assertEquals('6hr - $6.75', $ticket->getRate()->label());
     }
 }

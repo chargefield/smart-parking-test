@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Parking\Rate;
+use App\Parking\Facades\Rates;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -79,5 +81,15 @@ class Ticket extends Model
     public function getCreatedDate(): string
     {
         return $this->created_at->format('F j, Y h:i A');
+    }
+
+    /**
+     * Get current rate for this ticket.
+     *
+     * @return \App\Parking\Rate
+     */
+    public function getRate(): Rate
+    {
+        return Rates::getRateFromDuration($this->created_at->diffInHours(now()));
     }
 }
