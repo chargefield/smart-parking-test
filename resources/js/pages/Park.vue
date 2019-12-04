@@ -1,17 +1,21 @@
 <template>
   <div class="flex flex-col justify-center items-center min-h-screen">
     <logo />
-    <template v-if="spaces.hasSpaces">
-      <create-ticket class="max-w-sm mt-8" />
-    </template>
-    <template v-else>
-      <div class="w-full max-w-sm mt-8">
-        <h3 class="text-center text-4xl text-red-700 leading-tight">Sorry</h3>
-        <p
-          class="text-center text-2xl text-red-700 leading-tight"
-        >The parking lot is full at this time.</p>
-      </div>
-    </template>
+    <transition name="fade">
+      <template v-if="!loading">
+        <template v-if="spaces.hasSpaces">
+          <create-ticket class="max-w-sm mt-8" />
+        </template>
+        <template v-else>
+          <div class="w-full max-w-sm mt-8">
+            <h3 class="text-center text-4xl text-red-700 leading-tight">Sorry</h3>
+            <p
+              class="text-center text-2xl text-red-700 leading-tight"
+            >The parking lot is full at this time.</p>
+          </div>
+        </template>
+      </template>
+    </transition>
     <rates class="mt-8" />
     <router-link
       class="rounded-lg px-4 py-1 text-xl bg-blue-400 text-white no-underline font-bold uppercase mt-8 shadow-md"
@@ -36,7 +40,7 @@ export default {
     this.fetchSpacesAvailable()
   },
   computed: {
-    ...mapGetters(['spaces'])
+    ...mapGetters(['loading', 'spaces'])
   },
   methods: {
     ...mapActions(['fetchSpacesAvailable'])

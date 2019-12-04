@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    loading: false,
     rates: [],
     spaces: {
       spacesAvailable: 0,
@@ -13,6 +14,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    UPDATE_LOADING(state, loading) {
+      state.loading = loading;
+    },
     UPDATE_RATES(state, rates) {
       state.rates = rates;
     },
@@ -31,12 +35,17 @@ export default new Vuex.Store({
       });
     },
     fetchSpacesAvailable({ commit }) {
+      commit("UPDATE_LOADING", true);
       axios.get("/api/spaces/available").then(res => {
         commit("UPDATE_SPACES", res.data);
+        commit("UPDATE_LOADING", false);
       });
     }
   },
   getters: {
+    loading: state => {
+      return state.loading;
+    },
     rates: state => {
       return state.rates;
     },
