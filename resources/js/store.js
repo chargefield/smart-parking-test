@@ -5,11 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    rates: []
+    rates: [],
+    spaces: {}
   },
   mutations: {
     UPDATE_RATES(state, rates) {
       state.rates = rates;
+    },
+    UPDATE_SPACES(state, spaces) {
+      state.spaces = spaces;
     }
   },
   actions: {
@@ -21,6 +25,11 @@ export default new Vuex.Store({
       axios.get("/api/rates").then(res => {
         commit("UPDATE_RATES", res.data);
       });
+    },
+    fetchSpacesAvailable({ commit }) {
+      axios.get("/api/spaces/available").then(res => {
+        commit("UPDATE_SPACES", res.data);
+      });
     }
   },
   getters: {
@@ -29,6 +38,9 @@ export default new Vuex.Store({
     },
     hasRates: state => {
       return state.rates.length > 0;
+    },
+    spaces: state => {
+      return state.spaces;
     }
   },
   strict: process.env.NODE_ENV !== "production"
