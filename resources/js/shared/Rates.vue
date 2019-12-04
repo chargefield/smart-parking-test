@@ -13,7 +13,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  mounted() {
+  created() {
     this.fetchRates()
   },
   computed: {
