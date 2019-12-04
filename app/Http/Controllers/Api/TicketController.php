@@ -48,4 +48,25 @@ class TicketController extends Controller
             'rate' => $ticket->getRate(),
         ]);
     }
+
+    public function update(Request $request)
+    {
+        $validated = $request->validate([
+            'code' => 'required|string',
+        ]);
+
+        $ticket = Parking::findTicket($validated['code']);
+
+        if (is_null($ticket)) {
+            return Response::json([
+                'errors' => [
+                    'code' => 'Invalid code.',
+                ],
+            ], 422);
+        }
+
+        $ticket->pay();
+
+        return Response::json();
+    }
 }

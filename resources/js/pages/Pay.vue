@@ -24,6 +24,7 @@
         <button
           class="mt-4 w-20 h-20 border-gray-400 border-4 rounded-full bg-blue-400 text-white shadow-md flex justify-center items-center uppercase font-bold text-sm focus:outline-none"
           type="submit"
+          :disabled="loading"
         >Find</button>
       </form>
     </div>
@@ -32,6 +33,11 @@
       class="rounded-lg px-4 py-1 text-xl bg-blue-400 text-white no-underline uppercase font-bold mt-8 shadow-md"
       :to="{ name: 'home' }"
     >Main Menu</router-link>
+    <portal v-if="payScreen" to="modal">
+      <transition name="fade">
+        <payment :ticket="ticket" />
+      </transition>
+    </portal>
   </div>
 </template>
 
@@ -40,24 +46,43 @@ import Form from './../utilities/Form'
 import Errors from './../utilities/Errors'
 import Logo from './../shared/Logo'
 import Rates from './../shared/Rates'
+import Payment from './../shared/Payment'
 
 export default {
   components: {
     Logo,
-    Rates
+    Rates,
+    Payment
   },
   data() {
     return {
+      loading: false,
       form: new Form({
         code: ''
       }),
       errors: new Errors({}),
-      ticket: {}
+      ticket: {},
+      payScreen: false
     }
   },
   methods: {
     submit() {
-      //
+      this.loading = true
+
+      axios
+        .post('/api/tickets/show', this.form.data())
+        .then(res => {
+          this.ticket = res.data
+          this.form.reset()
+          this.errors.clearAll()
+          this.payScreen = true
+          this.loading = false
+        })
+        .catch(err => {
+          this.errors = new Errors(err.response.data.errors)
+          this.payScreen = false
+          this.loading = false
+        })
     }
   }
 }

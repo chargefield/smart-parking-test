@@ -81,4 +81,20 @@ class TicketTest extends TestCase
             ],
         ]);
     }
+
+    /** @test */
+    public function pay_ticket()
+    {
+        Parking::fake()->setTotalSpaces(5);
+
+        $ticket = Parking::createTicket();
+
+        $response = $this->patch(route('api.tickets'), [
+            'code' => $ticket->hash(),
+        ]);
+
+        $response->assertOk();
+
+        $this->assertTrue($ticket->fresh()->isPaid());
+    }
 }
