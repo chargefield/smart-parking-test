@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Parking\Manager;
 use App\Parking\RateManager;
 use App\Parking\Facades\Rates;
+use App\Parking\Facades\Parking;
 use Illuminate\Support\ServiceProvider;
 
 class ParkingServiceProvider extends ServiceProvider
@@ -18,6 +20,10 @@ class ParkingServiceProvider extends ServiceProvider
         $this->app->singleton('parking.rates', function () {
             return new RateManager;
         });
+
+        $this->app->singleton('parking.manager', function () {
+            return new Manager;
+        });
     }
 
     /**
@@ -31,5 +37,7 @@ class ParkingServiceProvider extends ServiceProvider
             ->add(3, 450)
             ->add(6, 675)
             ->max(1015);
+
+        // Parking::setTotalSpaces(10);
     }
 }
