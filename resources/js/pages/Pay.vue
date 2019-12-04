@@ -3,7 +3,7 @@
     <logo />
     <rates class="mt-8" />
     <router-link
-      class="rounded-lg px-4 py-1 text-xl bg-blue-400 text-white no-underline uppercase font-bold mt-8"
+      class="rounded-lg px-4 py-1 text-xl bg-blue-400 text-white no-underline uppercase font-bold mt-8 shadow-md"
       :to="{ name: 'home' }"
     >Main Menu</router-link>
   </div>
