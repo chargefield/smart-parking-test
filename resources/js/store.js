@@ -24,7 +24,7 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    allRates: state => {
+    rates: state => {
       return state.rates;
     },
     hasRates: state => {
