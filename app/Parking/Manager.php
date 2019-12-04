@@ -23,7 +23,7 @@ class Manager
         $id = Hashids::connection('ticket')->decode($hash);
 
         if (isset($id[0]) && ! is_null($id[0])) {
-            return Ticket::find($id[0]);
+            return Ticket::unpaid()->find($id[0]);
         }
 
         return null;

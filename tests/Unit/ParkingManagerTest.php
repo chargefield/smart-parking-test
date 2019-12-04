@@ -66,13 +66,23 @@ class ParkingManagerTest extends TestCase
     }
 
     /** @test */
-    public function it_finds_ticket_by_hash()
+    public function it_finds_unpaid_ticket_by_hash()
     {
         $ticket = factory(Ticket::class)->create();
 
         $parking = new ParkingManager;
 
         $this->assertTrue($ticket->is($parking->findTicket($ticket->hash())));
+    }
+
+    /** @test */
+    public function it_should_not_find_paid_ticket_by_hash()
+    {
+        $ticket = factory(Ticket::class)->state('paid')->create();
+
+        $parking = new ParkingManager;
+
+        $this->assertNull($parking->findTicket($ticket->hash()));
     }
 
     /** @test */
