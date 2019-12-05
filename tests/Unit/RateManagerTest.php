@@ -55,6 +55,22 @@ class RateManagerTest extends TestCase
         $this->assertEquals('6hr - $6.75', $rate->label());
         $this->assertEquals(6, $rate->duration());
         $this->assertEquals(675, $rate->amount());
+
+        $rate = $rates->getRateFromDuration(1);
+
+        $this->assertNotNull($rate);
+
+        $this->assertEquals('1hr - $3.00', $rate->label());
+        $this->assertEquals(1, $rate->duration());
+        $this->assertEquals(300, $rate->amount());
+
+        $rate = $rates->getRateFromDuration(2);
+
+        $this->assertNotNull($rate);
+
+        $this->assertEquals('3hr - $4.50', $rate->label());
+        $this->assertEquals(3, $rate->duration());
+        $this->assertEquals(450, $rate->amount());
     }
 
     /** @test */
