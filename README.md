@@ -81,6 +81,10 @@ npm install && npm run dev
 
 ## Usage
 
+### Preview
+
+You can use `php artisan serve` or whatever local web server you use to serve local websites.
+
 ### Defaults
 
 There are some defaults to help get you started in `app/Providers/ParkingServiceProvider.php`.
@@ -113,16 +117,10 @@ php artisan migrate:fresh --seed
 ### Artisan Command
 
 ```bash
-php artisan tickets:unpaid
+php artisan tickets:valid
 ```
 
-and
-
-```bash
-php artisan tickets:paid
-```
-
-These are helper commands that will output a list of tickets, you can use the ticket codes to test out the app.
+This is a helper command that will output a list of valid tickets(cars in the garage), you can use the ticket codes to test out the app.
 
 ## Testing
 
