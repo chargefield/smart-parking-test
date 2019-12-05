@@ -32,12 +32,11 @@ class FindPaidTicketsCommand extends Command
             ->map(function ($ticket) {
                 return [
                     'code' => $ticket->hash(),
-                    'rate' => $ticket->getRate()->label(),
                     'expired' => $ticket->isExpired() ? 'Yes' : 'No',
                 ];
             });
 
-        $this->table(['CODE', 'RATE', 'EXPIRED'], $tickets);
+        $this->table(['CODE', 'EXPIRED'], $tickets);
 
         return 0;
     }
