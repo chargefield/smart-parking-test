@@ -90,7 +90,7 @@ export default {
           this.loading = false
           setTimeout(() => {
             this.$router.replace({ name: 'home' })
-          }, 3000)
+          }, 3500)
         })
         .catch(err => {
           console.log(err.response.data)
