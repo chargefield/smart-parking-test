@@ -59,6 +59,28 @@ class Ticket extends Model
     }
 
     /**
+     * Valid scope.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return void
+     */
+    public function scopeValid(Builder $query)
+    {
+        $query->where('valid', 1);
+    }
+
+    /**
+     * Invalid scope.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return void
+     */
+    public function scopeInvalid(Builder $query)
+    {
+        $query->where('valid', 0);
+    }
+
+    /**
      * Check if this ticket is paid.
      *
      * @return bool

@@ -15,7 +15,7 @@ class SpacesAvailableTest extends TestCase
     public function get_spaces_available()
     {
         Parking::fake()->setTotalSpaces(5);
-        factory(Ticket::class, 5)->state('paid')->create();
+        factory(Ticket::class, 5)->states(['paid', 'invalid'])->create();
         factory(Ticket::class, 3)->create();
 
         $response = $this->get(route('api.spaces.available'));
@@ -32,7 +32,7 @@ class SpacesAvailableTest extends TestCase
     public function get_spaces_available_when_full()
     {
         Parking::fake()->setTotalSpaces(5);
-        factory(Ticket::class, 5)->state('paid')->create();
+        factory(Ticket::class, 5)->states(['paid', 'invalid'])->create();
         factory(Ticket::class, 5)->create();
 
         $response = $this->get(route('api.spaces.available'));

@@ -30,7 +30,7 @@ class ParkingManagerTest extends TestCase
     /** @test */
     public function it_gets_all_used_tickets()
     {
-        factory(Ticket::class, 2)->state('paid')->create();
+        factory(Ticket::class, 2)->states(['paid', 'invalid'])->create();
         $tickets = factory(Ticket::class, 3)->create();
 
         $parking = new ParkingManager;
@@ -44,7 +44,7 @@ class ParkingManagerTest extends TestCase
     /** @test */
     public function it_creates_a_ticket_only_if_the_lot_has_available_space()
     {
-        factory(Ticket::class, 2)->state('paid')->create();
+        factory(Ticket::class, 2)->states(['paid', 'invalid'])->create();
         factory(Ticket::class, 4)->create();
 
         $parking = (new ParkingManager)->setTotalSpaces(5);

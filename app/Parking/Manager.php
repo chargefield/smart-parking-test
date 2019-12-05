@@ -35,6 +35,26 @@ class Manager
     }
 
     /**
+     * Find all invalid tickets.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function findAllInvalidTickets(): Collection
+    {
+        return Ticket::invalid()->oldest()->get();
+    }
+
+    /**
+     * Find all valid tickets.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function findAllValidTickets(): Collection
+    {
+        return Ticket::valid()->latest()->get();
+    }
+
+    /**
      * Find ticket with given $hash.
      *
      * @param string $hash
@@ -80,7 +100,7 @@ class Manager
     public function getUsedTickets(): Collection
     {
         if (is_null($this->used_tickets)) {
-            $this->used_tickets = Ticket::unpaid()->oldest()->get();
+            $this->used_tickets = Ticket::valid()->oldest()->get();
         }
 
         return $this->used_tickets;
