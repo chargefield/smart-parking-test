@@ -15,6 +15,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('valid')->default(true);
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });

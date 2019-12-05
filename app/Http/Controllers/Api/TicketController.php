@@ -57,6 +57,10 @@ class TicketController extends Controller
             ], 422);
         }
 
+        if ($request->has('exit')) {
+            $ticket->invalidate();
+        }
+
         return Response::json([
             'date' => $ticket->getCreatedDate(),
             'code' => $ticket->hash(),

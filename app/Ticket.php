@@ -19,6 +19,15 @@ class Ticket extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'valid' => 'boolean',
+    ];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -66,7 +75,7 @@ class Ticket extends Model
      */
     public function isExpired(): bool
     {
-        return ! is_null($this->paid_at) && $this->paid_at->lessThan(now()->subMinutes(Parking::getTicketExpiredDelay()));
+        return ! $this->valid || (! is_null($this->paid_at) && $this->paid_at->lessThan(now()->subMinutes(Parking::getTicketExpiredDelay())));
     }
 
     /**
@@ -92,6 +101,22 @@ class Ticket extends Model
 
         return $this->update([
             'paid_at' => now(),
+        ]);
+    }
+
+    /**
+     * Invalidate this ticket.
+     *
+     * @return bool
+     */
+    public function invalidate(): bool
+    {
+        if (! $this->valid) {
+            return true;
+        }
+
+        return $this->update([
+            'valid' => false,
         ]);
     }
 
