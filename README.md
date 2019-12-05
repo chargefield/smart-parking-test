@@ -1,78 +1,125 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Smart Parking Test (Laravel)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+A test project in [Laravel](https://laravel.com) for managing customer in a parking garage.
 
-## About Laravel
+## The Scenario
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A company has hired us to build an application to manage customers using their parking garage. The app is accessed from a web browser.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The customer must be able to enter the parking garage with their vehicle and be issued a ticket.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The customer is then charged for parking based on the length of their stay. When the customer leaves the parking garage, they must pay their ticket and then exit.
 
-## Learning Laravel
+### Constraints
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+A customer arriving in their vehicle is able to request entry to the parking garage
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   If there is space available, a ticket is issued to the customer
 
-## Laravel Sponsors
+The customer is able to pay their ticket based on the length of their stay
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+-   Use 1hr, 3hr, 6hr, or ALL DAY for rate levels
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+-   The price increases by 50% for each rate level
 
-## Contributing
+-   The starting rate is \$3 for 1hr
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+When a customer is on their way out of the garage, check that their ticket is paid/valid e. Otherwise, deny their exit
 
-## Code of Conduct
+If the parking garage is full, deny entry to that customer.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Installation
 
-## Security Vulnerabilities
+Fork or download this repository:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+git@github.com:chargefield/smart-parking-test.git
+```
 
-## License
+In the terminal, `cd` into the folder and use [composer](https://getcomposer.org) to install the default [Laravel](https://laravel.com) packages:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+composer install
+```
+
+_Note: You might need to duplicate the `.env.example` file and name it `.env`. Fill out any important values to get the application up and running._
+
+### Database Setup
+
+Create a database and update the `.env` file with the correct values.
+
+**Example:**
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=secret
+```
+
+### Migrate Database
+
+```bash
+php artisan migrate:fresh
+```
+
+### Compiling Assets
+
+For the front end to work, you'll need to run:
+
+```bash
+yarn install && yarn run dev
+```
+
+or
+
+```bash
+npm install && npm run dev
+```
+
+## Usage
+
+### Defaults
+
+There are some defaults to help get you started in `app/Providers/ParkingServiceProvider.php`.
+
+```php
+// add(duration in hours, amount in cents)
+// max(amount in cents) duration is 24 hours
+Rates::add(1, 300)
+    ->add(3, 450)
+    ->add(6, 675)
+    ->max(1015);
+
+// Defaults to 10 spaces
+Parking::setTotalSpaces(10);
+
+// Defaults to 15 minutes
+Parking::setTicketExpiredDelay(15);
+```
+
+_You can add or change these values._
+
+### Artisan Command
+
+```bash
+php artisan tickets:unpaid
+```
+
+and
+
+```bash
+php artisan tickets:paid
+```
+
+These are helper commands that will output a list of tickets, you can use the ticket codes to test out the app.
+
+## Testing
+
+You can run the tests with:
+
+```bash
+vendor/bin/phpunit
+```
