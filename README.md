@@ -102,6 +102,14 @@ Parking::setTicketExpiredDelay(15);
 
 _You can add or change these values._
 
+### Seed Database
+
+Seed the database with a random number of unpaid tickets:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
 ### Artisan Command
 
 ```bash
