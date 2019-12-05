@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 class RateManager
 {
     protected $max_hours = 24;
+
     protected $rates;
 
     public function __construct()
