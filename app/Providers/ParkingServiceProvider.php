@@ -39,5 +39,6 @@ class ParkingServiceProvider extends ServiceProvider
             ->max(1015);
 
         // Parking::setTotalSpaces(10);
+        // Parking::setTicketExpiredDelay(15);
     }
 }

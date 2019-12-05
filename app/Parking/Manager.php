@@ -8,9 +8,11 @@ use Vinkla\Hashids\Facades\Hashids;
 
 class Manager
 {
+    protected $used_tickets;
+
     protected $total_spaces = 10;
 
-    protected $used_tickets;
+    protected $ticket_expired_delay = 15; // minutes
 
     /**
      * Find all unpaid tickets.
@@ -127,6 +129,29 @@ class Manager
     public function setTotalSpaces(int $spaces): self
     {
         $this->total_spaces = $spaces;
+
+        return $this;
+    }
+
+    /**
+     * Get ticket expired delay.
+     *
+     * @return int
+     */
+    public function getTicketExpiredDelay(): int
+    {
+        return $this->ticket_expired_delay;
+    }
+
+    /**
+     * Set ticket expired delay.
+     *
+     * @param int $minutes
+     * @return self
+     */
+    public function setTicketExpiredDelay(int $minutes): self
+    {
+        $this->ticket_expired_delay = $minutes;
 
         return $this;
     }

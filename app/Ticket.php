@@ -4,6 +4,7 @@ namespace App;
 
 use App\Parking\Rate;
 use App\Parking\Facades\Rates;
+use App\Parking\Facades\Parking;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -65,7 +66,7 @@ class Ticket extends Model
      */
     public function isExpired(): bool
     {
-        return ! is_null($this->paid_at) && $this->paid_at->lessThan(now()->subMinutes(15));
+        return ! is_null($this->paid_at) && $this->paid_at->lessThan(now()->subMinutes(Parking::getTicketExpiredDelay()));
     }
 
     /**
