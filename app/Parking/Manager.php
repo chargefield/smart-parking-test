@@ -23,16 +23,31 @@ class Manager
     }
 
     /**
+     * Find all paid tickets.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function findAllPaidTickets(): Collection
+    {
+        return Ticket::paid()->latest()->get();
+    }
+
+    /**
      * Find ticket with given $hash.
      *
      * @param string $hash
+     * @param bool $all
      * @return \App\Ticket|null
      */
-    public function findTicket(string $hash): ?Ticket
+    public function findTicket(string $hash, bool $all = false): ?Ticket
     {
         $id = Hashids::connection('ticket')->decode($hash);
 
         if (isset($id[0]) && ! is_null($id[0])) {
+            if ($all) {
+                return Ticket::find($id[0]);
+            }
+
             return Ticket::unpaid()->find($id[0]);
         }
 

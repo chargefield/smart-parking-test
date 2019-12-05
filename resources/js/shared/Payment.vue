@@ -3,6 +3,7 @@
     class="fixed top-0 left-0 right-0 bottom-0 w-screen h-screen bg-gray-100 z-50 flex flex-col justify-center items-center"
   >
     <logo />
+    <h4 class="text-xl text-black font-bold mt-6">Pay Ticket</h4>
     <div class="w-full max-w-sm mt-8">
       <p class="text-lg text-center">Your current parking rate:</p>
       <h2
@@ -42,13 +43,14 @@
       </div>
       <div v-else class="mt-4">
         <p class="text-2xl text-center text-green-400">Thank You!</p>
+        <p class="text-lg text-center mt-1">You may now exit the parking garage.</p>
       </div>
     </div>
     <rates class="mt-8" />
     <router-link
       class="rounded-lg px-4 py-1 text-xl bg-blue-400 text-white no-underline uppercase font-bold mt-8 shadow-md"
       :to="{ name: 'home' }"
-    >Pay Later</router-link>
+    >{{ completed ? 'Main Menu' : 'Pay Later' }}</router-link>
   </div>
 </template>
 

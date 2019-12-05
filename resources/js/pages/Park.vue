@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col justify-center items-center min-h-screen">
     <logo />
+    <h4 class="text-xl text-black font-bold mt-6">Get Ticket</h4>
     <transition name="fade">
       <template v-if="!loading">
         <template v-if="spaces.hasSpaces">

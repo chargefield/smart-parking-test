@@ -31,12 +31,28 @@ class TicketController extends Controller
             'code' => 'required|string',
         ]);
 
-        $ticket = Parking::findTicket($validated['code']);
+        $ticket = Parking::findTicket($validated['code'], $request->has('exit'));
 
         if (is_null($ticket)) {
             return Response::json([
                 'errors' => [
                     'code' => 'Invalid code.',
+                ],
+            ], 422);
+        }
+
+        if ($request->has('exit') && ! $ticket->isPaid()) {
+            return Response::json([
+                'errors' => [
+                    'code' => 'This ticket must be paid before exiting.',
+                ],
+            ], 422);
+        }
+
+        if ($request->has('exit') && $ticket->isExpired()) {
+            return Response::json([
+                'errors' => [
+                    'code' => 'Your ticket has expired.',
                 ],
             ], 422);
         }

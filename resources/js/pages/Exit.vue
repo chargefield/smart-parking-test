@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col justify-center items-center min-h-screen">
     <logo />
-    <h4 class="text-xl text-black font-bold mt-6">Pay Ticket</h4>
-    <div class="w-full max-w-sm mt-8">
+    <h4 class="text-xl text-black font-bold mt-6">Exit Garage</h4>
+    <div v-if="!exit" class="w-full max-w-sm mt-8">
       <p class="text-center text-sm">Please enter the code on your ticket.</p>
       <form
         class="flex flex-col justify-center items-center mt-2"
@@ -26,19 +26,17 @@
           class="mt-4 w-20 h-20 border-gray-400 border-4 rounded-full bg-blue-400 text-white shadow-md flex justify-center items-center uppercase font-bold text-sm focus:outline-none"
           type="submit"
           :disabled="loading"
-        >Find</button>
+        >Open</button>
       </form>
     </div>
-    <rates class="mt-8" />
+    <div v-else class="w-full max-w-sm mt-8">
+      <p class="text-5xl font-bold text-center text-blue-400">Goodbye!</p>
+    </div>
     <router-link
-      class="rounded-lg px-4 py-1 text-xl bg-blue-400 text-white no-underline uppercase font-bold mt-8 shadow-md"
+      v-if="!exit"
+      class="rounded-lg px-4 py-1 text-xl bg-blue-400 text-white no-underline uppercase font-bold mt-16 shadow-md"
       :to="{ name: 'home' }"
     >Main Menu</router-link>
-    <portal v-if="payScreen" to="modal">
-      <transition name="fade">
-        <payment :ticket="ticket" />
-      </transition>
-    </portal>
   </div>
 </template>
 
@@ -46,14 +44,10 @@
 import Form from './../utilities/Form'
 import Errors from './../utilities/Errors'
 import Logo from './../shared/Logo'
-import Rates from './../shared/Rates'
-import Payment from './../shared/Payment'
 
 export default {
   components: {
-    Logo,
-    Rates,
-    Payment
+    Logo
   },
   data() {
     return {
@@ -63,7 +57,7 @@ export default {
       }),
       errors: new Errors({}),
       ticket: {},
-      payScreen: false
+      exit: false
     }
   },
   methods: {
@@ -71,17 +65,20 @@ export default {
       this.loading = true
 
       axios
-        .post('/api/tickets/show', this.form.data())
+        .post('/api/tickets/show?exit', this.form.data())
         .then(res => {
           this.ticket = res.data
           this.form.reset()
           this.errors.clearAll()
-          this.payScreen = true
+          this.exit = true
           this.loading = false
+          setTimeout(() => {
+            this.$router.replace({ name: 'home' })
+          }, 3000)
         })
         .catch(err => {
           this.errors = new Errors(err.response.data.errors)
-          this.payScreen = false
+          this.exit = false
           this.loading = false
         })
     }

@@ -50,6 +50,47 @@ class TicketTest extends TestCase
     }
 
     /** @test */
+    public function find_a_ticket_using_a_code_when_exiting()
+    {
+        Parking::fake()->setTotalSpaces(5);
+
+        $ticket = Parking::createTicket();
+
+        $ticket->pay();
+
+        $response = $this->post(route('api.tickets.show').'?exit', [
+            'code' => $ticket->hash(),
+        ]);
+
+        $response->assertOk();
+        $response->assertExactJson([
+            'date' => $ticket->getCreatedDate(),
+            'code' => $ticket->hash(),
+            'isPaid' => $ticket->isPaid(),
+            'rate' => $ticket->getRate()->jsonSerialize(),
+        ]);
+    }
+
+    /** @test */
+    public function throw_an_error_when_find_an_unpaid_ticket_using_a_code_when_exiting()
+    {
+        Parking::fake()->setTotalSpaces(5);
+
+        $ticket = Parking::createTicket();
+
+        $response = $this->post(route('api.tickets.show').'?exit', [
+            'code' => $ticket->hash(),
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertExactJson([
+            'errors' => [
+                'code' => 'This ticket must be paid before exiting.',
+            ],
+        ]);
+    }
+
+    /** @test */
     public function throw_an_error_when_no_code_entered()
     {
         Parking::fake()->setTotalSpaces(5);

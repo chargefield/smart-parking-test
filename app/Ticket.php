@@ -38,6 +38,17 @@ class Ticket extends Model
     }
 
     /**
+     * Paid scope.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return void
+     */
+    public function scopePaid(Builder $query)
+    {
+        $query->whereNotNull('paid_at');
+    }
+
+    /**
      * Check if this ticket is paid.
      *
      * @return bool
@@ -45,6 +56,16 @@ class Ticket extends Model
     public function isPaid(): bool
     {
         return ! is_null($this->paid_at);
+    }
+
+    /**
+     * Check if this ticket is expired.
+     *
+     * @return bool
+     */
+    public function isExpired(): bool
+    {
+        return ! is_null($this->paid_at) && $this->paid_at->lessThan(now()->subMinutes(15));
     }
 
     /**
@@ -80,7 +101,7 @@ class Ticket extends Model
      */
     public function getCreatedDate(): string
     {
-        return $this->created_at->format('F j, Y h:i A');
+        return $this->created_at->setTimezone('America/Toronto')->format('F j, Y h:i A');
     }
 
     /**

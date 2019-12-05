@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import Home from "./pages/Home";
 import Park from "./pages/Park";
 import Pay from "./pages/Pay";
+import Exit from "./pages/Exit";
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,11 @@ export default new VueRouter({
       path: "/pay",
       name: "pay",
       component: Pay
+    },
+    {
+      path: "/exit",
+      name: "exit",
+      component: Exit
     },
     {
       path: "/",

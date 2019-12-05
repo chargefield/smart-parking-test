@@ -55,10 +55,10 @@ class TicketTest extends TestCase
     public function it_gets_the_formatted_created_date()
     {
         $ticket = factory(Ticket::class)->create([
-            'created_at' => Carbon::parse('2019-12-04 12:45:00'),
+            'created_at' => $date = Carbon::parse('2019-12-04 12:45:00'),
         ]);
 
-        $this->assertEquals('December 4, 2019 12:45 PM', $ticket->getCreatedDate());
+        $this->assertEquals($date->setTimezone('America/Toronto')->format('F j, Y h:i A'), $ticket->getCreatedDate());
     }
 
     /** @test */

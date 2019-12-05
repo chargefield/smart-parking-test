@@ -3,14 +3,17 @@
     <logo />
     <div class="flex flex-col sm:flex-row justify-center items-center mt-8">
       <router-link
-        class="rounded-lg px-8 py-3 text-4xl bg-blue-400 text-white no-underline font-bold uppercase shadow-md"
+        class="m-2 rounded-lg px-8 py-3 text-4xl bg-blue-400 text-white no-underline font-bold uppercase shadow-md"
         :to="{ name: 'park' }"
       >Park</router-link>
-      <span class="px-8 py-4 text-2xl">or</span>
       <router-link
-        class="rounded-lg px-8 py-3 text-4xl bg-blue-400 text-white no-underline font-bold uppercase shadow-md"
+        class="m-2 rounded-lg px-8 py-3 text-4xl bg-blue-400 text-white no-underline font-bold uppercase shadow-md"
         :to="{ name: 'pay' }"
       >Pay</router-link>
+      <router-link
+        class="m-2 rounded-lg px-8 py-3 text-4xl bg-blue-400 text-white no-underline font-bold uppercase shadow-md"
+        :to="{ name: 'exit' }"
+      >Exit</router-link>
     </div>
     <rates class="mt-8" />
   </div>
