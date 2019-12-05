@@ -137,6 +137,10 @@ class Ticket extends Model
      */
     public function getRate(): Rate
     {
+        if ($this->isPaid()) {
+            return Rates::getRateFromDuration($this->created_at->diffInHours($this->paid_at));
+        }
+
         return Rates::getRateFromDuration($this->created_at->diffInHours(now()));
     }
 }
